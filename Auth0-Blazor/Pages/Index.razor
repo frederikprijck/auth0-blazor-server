@@ -1,4 +1,5 @@
 ﻿@page "/"
+@inject TokenProvider tokenProvider
 @attribute [Authorize]
 
 <PageTitle>Index</PageTitle>
@@ -8,6 +9,9 @@ You can only see this content if you're authenticated.
 <br />
 <img src="@Picture">
 
+<div>IdToken: @IdToken</div>
+<div>AccessToken: @AccessToken</div>
+
 <SurveyPrompt Title="How is Blazor working for you?" />
 
 @code {
@@ -16,12 +20,16 @@ You can only see this content if you're authenticated.
     public Task<AuthenticationState> AuthenticationStateTask { get; set; }
     private string Username = "";
     private string Picture = "";
+    private string IdToken = "";
+    private string AccessToken = "";
 
     protected override async Task OnInitializedAsync()
     {
         var state = await AuthenticationStateTask;
 
         Username = state.User.Identity.Name ?? string.Empty;
+        IdToken = tokenProvider.IdToken;
+        AccessToken = tokenProvider.AccessToken;
 
         Picture = state.User.Claims
             .Where(c => c.Type.Equals("picture"))
