@@ -8,4 +8,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(RunConfiguration)' == 'Auth0-Blazor' " />
+  <ItemGroup>
+    <PackageReference Include="Auth0.AspNetCore.Authentication" Version="1.2.0" />
+  </ItemGroup>
 </Project>
